@@ -183,7 +183,7 @@ graph save 4-7_pacf.gph,replace
 graph combine 4-7_acf.gph 4-7_pacf.gph,rows(2)
 graph save 4-7_acf_pacf.gph,replace
 //MA(2) estimate
-arima x,ma(2) condition
+arima x,ma(1/2) condition
 predict e1,res
 //AR(1) estimate
 arima x,ar(1) condition
@@ -192,7 +192,7 @@ predict e2,res
 wntestq e1,lags(6)
 wntestq e1,lags(12)
 wntestq e1,lags(18)
-arima x,ma(2) condition
+arima x,ma(1/2) condition
 //LB test and para test for MA(1)
 wntestq e2,lags(6)
 wntestq e2,lags(12)
@@ -203,7 +203,7 @@ clear all
 use "A1-10.dta"
 tsset time
 //AIC and BIC test
-quietly arima x,ma(2) condition 
+quietly arima x,ma(1/2) condition 
 estat ic
 quietly arima x,ar(1) condition
 estat ic
