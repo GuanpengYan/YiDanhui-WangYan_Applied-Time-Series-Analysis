@@ -68,19 +68,18 @@ graph save 5-6_pacf.gph,replace
 graph combine 5-6_acf.gph 5-6_pacf.gph,rows(2)
 graph save 5-6_acf_pacf.gph,replace
 //ARIMA(1,1,0) estimate
-arima D.gnp,arima(1,0,0) condition vce(oim)
-arima gnp,arima(1,1,0) condition vce(oim)
+arima D.gnp,arima(1,0,0) condition vce(oim) nolog
+arima gnp,arima(1,1,0) condition vce(oim) nolog
 predict e,res
 //LB test and para test for MA(2)
 wntestq e,lags(6)
 wntestq e,lags(12)
-wntestq e,lags(18)
 
 **例5-6续 P141
 clear all
 use "A1-14.dta"
 tsset year
-//AR(1)
+//ARIMA(1,1,0)
 quietly arima gnp,arima(1,1,0) condition
 tsappend,add(10)
 predict y,dynamic(1971) y
@@ -113,7 +112,6 @@ forval i = 0/2{
 //LB test
 wntestq D.fertility,lags(6)
 wntestq D.fertility,lags(12)
-wntestq D.fertility,lags(18)
 //Plot ACF
 ac D.fertility,lags(15)		
 graph save 5-8_acf.gph,replace
